@@ -91,7 +91,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="p-5 font-mono text-[clamp(12px,1.1vw,16px)] leading-[1.75] md:p-8">
+          <div className="p-5 font-mono text-[clamp(0.75rem,1.1vw,1rem)] leading-[1.75] md:p-8">
             {/* Kode Dart (tampilan saja), dibangun dari socials */}
             <pre className="whitespace-pre-wrap break-words text-bone/85">
               <Kw>import</Kw> <Str>'dart:io'</Str>;{"\n\n"}

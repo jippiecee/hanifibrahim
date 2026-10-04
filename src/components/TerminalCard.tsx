@@ -92,7 +92,7 @@ export default function TerminalCard() {
           </div>
           <span className="pointer-events-none absolute inset-x-0 text-center font-sans text-[0.75rem] font-medium text-bone/55">hanif — node {dev.file}</span>
         </div>
-        <div aria-hidden className="grid p-4 text-[clamp(10px,0.82vw,12.5px)] leading-[1.7]">
+        <div aria-hidden className="grid p-4 text-[clamp(0.625rem,0.82vw,0.78125rem)] leading-[1.7]">
           {/* Lapisan hantu: menahan tinggi akhir supaya jendela tidak melompat saat mengetik */}
           <div className="invisible col-start-1 row-start-1"><Body toks={toks} n={total} run out={outputs.length} cursor={false} /></div>
           <div className="col-start-1 row-start-1"><Body toks={toks} n={n} run={run} out={out} cursor={!done} /></div>
