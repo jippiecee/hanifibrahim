@@ -11,4 +11,5 @@ export const projects: Project[] = [
   { title: "Destentations", tag: "Company Website", image: "/projects/destentations.jpg", url: "" },
   { title: "D-Event", tag: "Event Management Platform", image: "/projects/d-event.jpg", url: "" },
   { title: "Cretects", tag: "Thrift Shop Marketplace", image: "/projects/cretects.jpg", url: "" },
+  { title: "HiuBlog", tag: "Personal Blog", image: "/projects/hiublog.jpg", url: "" },
 ];
