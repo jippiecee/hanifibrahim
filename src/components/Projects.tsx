@@ -4,7 +4,7 @@ import { projects, projectsSection } from "../data/projects";
 import { useMedia } from "../hooks/useMedia";
 import MacFrame from "./MacFrame";
 
-const label = "font-editorial text-[12px] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[13px]";
+const label = "font-editorial text-[0.75rem] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[0.8125rem]";
 
 type Project = (typeof projects)[number];
 

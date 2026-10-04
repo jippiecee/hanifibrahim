@@ -41,7 +41,7 @@ export default function CreatorStats() {
               transition={{ duration: 1.1, delay: i * 0.12, ease }}
               className="px-2 py-10 text-center md:py-16">
               <div className="display text-[clamp(2rem,7vw,6rem)] !leading-none"><Count to={s.value} decimals={s.decimals} suffix={s.suffix} /></div>
-              <p className="mt-4 font-editorial text-[10px] font-normal uppercase tracking-[0.25em] text-bone/60 md:mt-6 md:text-[13px] md:tracking-[0.3em]">{s.label}</p>
+              <p className="mt-4 font-editorial text-[0.625rem] font-normal uppercase tracking-[0.25em] text-bone/60 md:mt-6 md:text-[0.8125rem] md:tracking-[0.3em]">{s.label}</p>
             </motion.div>
           ))}
         </div>

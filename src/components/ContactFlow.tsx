@@ -11,7 +11,7 @@ export default function ContactFlow() {
       </div>
       <Contact />
       <MoreContact />
-      <p className="relative z-10 px-6 pb-8 pt-28 text-center font-mono text-[11px] tracking-wide text-bone/50 md:pt-40 md:text-xs">
+      <p className="relative z-10 px-6 pb-8 pt-28 text-center font-mono text-[0.6875rem] tracking-wide text-bone/50 md:pt-40 md:text-xs">
         © 2026 Hanif Ibrahim. All rights reserved.
       </p>
     </div>

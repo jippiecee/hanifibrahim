@@ -52,7 +52,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1.4, delay: 1.0, ease: expo }}
-          className="mb-10 pl-[0.4em] font-editorial text-[14px] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[18px] md:tracking-[0.55em]"
+          className="mb-10 pl-[0.4em] font-editorial text-[0.875rem] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[1.125rem] md:tracking-[0.55em]"
         >
           {profile.role}
         </motion.p>

@@ -43,7 +43,7 @@ export default function Experience() {
           style={wide ? { scale, opacity: dim, transformOrigin: "50% 100%" } : undefined}
           className="px-5 pb-24 pt-28 md:px-12 md:pb-40 md:pt-44">
           <div className="mx-auto max-w-6xl">
-            <motion.p {...reveal()} className="mb-6 pl-[0.4em] text-center font-editorial text-[14px] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[18px] md:tracking-[0.55em]">{experience.label}</motion.p>
+            <motion.p {...reveal()} className="mb-6 pl-[0.4em] text-center font-editorial text-[0.875rem] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[1.125rem] md:tracking-[0.55em]">{experience.label}</motion.p>
             <motion.h2 {...reveal(0.1)} className="display mx-auto max-w-4xl text-center text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{experience.title}</motion.h2>
 
             <div className="relative mx-auto mt-14 flex w-full flex-col items-center gap-6 md:mt-24 lg:block lg:w-[min(44vw,52rem)]">

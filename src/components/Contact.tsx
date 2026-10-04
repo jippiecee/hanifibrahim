@@ -81,7 +81,7 @@ export default function Contact() {
         >
           {/* Title bar ala Linux (GNOME): kontrol di kanan */}
           <div className="relative flex items-center border-b border-black/60 bg-gradient-to-b from-[#3b3c40] to-[#2d2e32] px-4 py-2.5">
-            <span className="pointer-events-none absolute inset-x-0 text-center font-sans text-[12px] font-medium text-bone/55">{PROMPT.replace("$", "")} — contact.dart</span>
+            <span className="pointer-events-none absolute inset-x-0 text-center font-sans text-[0.75rem] font-medium text-bone/55">{PROMPT.replace("$", "")} — contact.dart</span>
             <div aria-hidden className="z-10 ml-auto flex gap-2 text-bone/60">
               {["M5 12h14", "M6 6h12v12H6z", "M6 6l12 12M18 6 6 18"].map((d) => (
                 <span key={d} className="grid h-5 w-5 place-items-center rounded-full bg-white/10">

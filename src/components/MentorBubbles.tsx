@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 const ease = [0.22, 1, 0.36, 1] as const;
-const pill = "w-fit rounded-full px-4 py-2.5 text-[13px] font-medium md:px-5 md:py-3 md:text-[15px]";
+const pill = "w-fit rounded-full px-4 py-2.5 text-[0.8125rem] font-medium md:px-5 md:py-3 md:text-[0.9375rem]";
 /** Pop-out messages: appear one by one, dismissible, reopenable. */
 export default function MentorBubbles({ schools }: { schools: string[] }) {
   const ref = useRef<HTMLUListElement>(null);

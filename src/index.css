@@ -12,3 +12,6 @@ html { overflow-x: clip; }
 @media (pointer: fine) { .has-cursor, .has-cursor * { cursor: none !important; } }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+/* Di layar < 1920px (mis. Windows scaling 125%), semua ukuran (rem) mengecil proporsional
+   supaya tampilannya sama dengan di layar 1920px. Di 1920px ke atas tetap 16px. */
+@media (min-width: 1024px) { html { font-size: clamp(11px, calc(100vw / 120), 16px); } }

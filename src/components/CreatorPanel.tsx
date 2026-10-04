@@ -4,7 +4,7 @@ import { creator } from "../data/creator";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const reveal = (delay = 0) => ({ initial: { opacity: 0, y: 32 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-12%" }, transition: { duration: 1.1, delay, ease } });
-const label = "font-editorial text-[12px] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[13px]";
+const label = "font-editorial text-[0.75rem] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[0.8125rem]";
 
 /** Satu kotak bento. `outside` dipakai untuk elemen yang boleh keluar dari kotak (mis. bubble). */
 function Tile({ className, delay = 0, children, outside }: { className: string; delay?: number; children: ReactNode; outside?: ReactNode }) {
@@ -39,7 +39,7 @@ export default function CreatorPanel() {
               initial={{ opacity: 0, scale: 0.4 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-8%" }}
               transition={{ default: { type: "spring", stiffness: 220, damping: 15, delay: 1.1 }, opacity: { duration: 0.4, delay: 1.1 } }}
               style={{ originX: 0, originY: 1 }}
-              className="absolute left-[58%] top-[12%] z-20 w-fit whitespace-nowrap rounded-full rounded-bl-md bg-volt px-4 py-2.5 text-xs font-medium text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] md:left-[66%] md:px-5 md:py-3 md:text-[15px]">
+              className="absolute left-[58%] top-[12%] z-20 w-fit whitespace-nowrap rounded-full rounded-bl-md bg-volt px-4 py-2.5 text-xs font-medium text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] md:left-[66%] md:px-5 md:py-3 md:text-[0.9375rem]">
               {channel.name}
             </motion.a>
           }>
