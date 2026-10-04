@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useMedia } from "../hooks/useMedia";
 
 const IMG = "/hands.png"; // ganti ke "/hands.jpg" kalau file lo jpg
 const SW = "min(80rem, 100vw - 2.5rem)"; // lebar gambar sebelum membesar (80rem = 1280px). Mau lebih besar: 90rem
@@ -7,6 +8,7 @@ const GAP = "1rem"; // jarak quote ke gambar. Mau lebih renggang: 2rem / 3rem. B
 
 export default function HandsBridge() {
   const reduce = useReducedMotion();
+  const small = useMedia("(max-width: 767px)");
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
@@ -15,10 +17,12 @@ export default function HandsBridge() {
   const stageScale = useTransform(p, [0.5, 1], [1, 0.94]);
   const stageDim = useTransform(p, [0.5, 1], [1, 0.25]);
 
-  if (reduce) {
+  // HP / reduce motion: gambar biasa, tanpa animasi scroll
+  if (reduce || small) {
     return (
-      <section className="bg-[#050506] px-5 pb-24 md:px-12">
-        <img src={IMG} alt="Dua tangan yang terhubung oleh benang merah" className="mx-auto block aspect-[8/3] w-full max-w-7xl rounded-[2rem] object-cover" />
+      <section className="bg-[#050506] px-5 pb-16 pt-10 md:px-12 md:pb-24">
+        <img src={IMG} alt="Dua tangan yang terhubung oleh benang merah" loading="lazy" decoding="async"
+          className="mx-auto block aspect-[16/9] w-full max-w-7xl rounded-[1.5rem] object-cover md:aspect-[8/3] md:rounded-[2rem]" />
       </section>
     );
   }

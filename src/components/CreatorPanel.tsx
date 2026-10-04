@@ -59,7 +59,7 @@ export default function CreatorPanel() {
           <Img src={images.thumb2} alt="YouTube thumbnail: Best Texturepack Bedwars" />
         </Tile>
 
-        <Tile delay={0.16} className="col-span-2 aspect-[4/5] md:col-span-2 md:col-start-7 md:row-span-4 md:row-start-1 md:aspect-auto">
+        <Tile delay={0.16} className="hidden md:col-span-2 md:col-start-7 md:row-span-4 md:row-start-1 md:block md:aspect-auto">
           <Img src={images.art} alt="Artwork" pos="center 40%" />
         </Tile>
       </div>

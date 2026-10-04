@@ -6,9 +6,8 @@ import CreatorStats from "./components/CreatorStats";
 import QuoteSection from "./components/QuoteSection";
 import HandsBridge from "./components/HandsBridge";
 import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import MoreContact from "./components/MoreContact";
+import ContactFlow from "./components/ContactFlow";
 export default function App() {
   useLenis();
-  return <><Navbar /><main><Hero /><Experience /><CreatorStats /><QuoteSection /><HandsBridge /><Projects /><Contact /><MoreContact /></main></>;
+  return <><Navbar /><main><Hero /><Experience /><CreatorStats /><QuoteSection /><HandsBridge /><Projects /><ContactFlow /></main></>;
 }

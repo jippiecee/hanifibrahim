@@ -4,3 +4,5 @@ export const socials = [
   { cmd: "linkedin",  url: "https://linkedin.com/in/USERNAME_KAMU" },
   { cmd: "github",    url: "https://github.com/USERNAME_KAMU" },
 ];
+
+export const email: string = "theumbara@Gmail.com";

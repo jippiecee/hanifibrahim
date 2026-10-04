@@ -1,7 +1,8 @@
 @tailwind base; @tailwind components; @tailwind utilities;
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
-body { @apply bg-ink text-bone font-display antialiased; overflow-x: hidden; }
+body { @apply bg-ink text-bone font-display antialiased; overflow-x: clip; }
+html { overflow-x: clip; }
 ::selection { background: #14f1ff; color: #050608; }
 :focus-visible { outline: 2px solid #14f1ff; outline-offset: 4px; border-radius: 6px; }
 .display { font-variation-settings: "wdth" 75; letter-spacing: -0.045em; line-height: .8; font-weight: 800; text-transform: uppercase; }

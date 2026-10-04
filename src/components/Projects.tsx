@@ -1,15 +1,16 @@
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity, type MotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { projects, projectsSection } from "../data/projects";
+import { useMedia } from "../hooks/useMedia";
 import MacFrame from "./MacFrame";
 
 const label = "font-editorial text-[12px] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[13px]";
 
 type Project = (typeof projects)[number];
 
-function Card({ project, index, progress, tick, centers, dist }: {
+function Card({ project, index, progress, tick, centers, dist, pinned }: {
   project: Project; index: number; progress: MotionValue<number>; tick: MotionValue<number>;
-  centers: React.MutableRefObject<number[]>; dist: React.MutableRefObject<number>;
+  centers: React.MutableRefObject<number[]>; dist: React.MutableRefObject<number>; pinned: boolean;
 }) {
   const focus = useTransform([progress, tick], (latest: number[]) => {
     const vw = window.innerWidth;
@@ -21,9 +22,10 @@ function Card({ project, index, progress, tick, centers, dist }: {
 
   return (
     <motion.a data-card href={project.url || undefined} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title}`}
-      style={{ scale, opacity }} className="group block w-[82vw] shrink-0 md:w-[min(42vw,calc((100vh-20rem)*1.65))]">
+      style={pinned ? { scale, opacity } : undefined}
+      className={`group block shrink-0 ${pinned ? "w-[82vw] md:w-[min(42vw,calc((100vh-20rem)*1.65))]" : "w-full"}`}>
       <MacFrame src={project.image} alt={`${project.title} website preview`} />
-      <div className="mt-7 flex items-start justify-between gap-6">
+      <div className="mt-5 flex items-start justify-between gap-4 md:mt-7 md:gap-6">
         <div>
           <p className={label}>{String(index + 1).padStart(2, "0")} — {project.tag}</p>
           <h3 className="mt-2 font-display text-[clamp(1.4rem,2.4vw,2.2rem)] font-semibold leading-none tracking-tight">{project.title}</h3>
@@ -38,6 +40,7 @@ function Card({ project, index, progress, tick, centers, dist }: {
 
 export default function Projects() {
   const reduce = useReducedMotion();
+  const small = useMedia("(max-width: 767px)");
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const distRef = useRef(0);
@@ -45,9 +48,12 @@ export default function Projects() {
   const tick = useMotionValue(0);
   const [height, setHeight] = useState<number | undefined>(undefined);
 
+  // Tablet/desktop: scroll vertikal menggeser deretan card. HP: daftar vertikal biasa.
+  const pinned = !reduce && !small;
+
   useEffect(() => {
     const el = trackRef.current;
-    if (!el) return;
+    if (!el || !pinned) return;
     const calc = () => {
       distRef.current = Math.max(0, el.scrollWidth - window.innerWidth);
       centers.current = Array.from(el.querySelectorAll<HTMLElement>("[data-card]")).map((c) => c.offsetLeft + c.offsetWidth / 2);
@@ -59,7 +65,7 @@ export default function Projects() {
     ro.observe(el);
     window.addEventListener("resize", calc);
     return () => { ro.disconnect(); window.removeEventListener("resize", calc); };
-  }, [tick]);
+  }, [tick, pinned]);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, (p) => -p * distRef.current);
@@ -68,13 +74,29 @@ export default function Projects() {
   const vel = useSpring(useVelocity(scrollY), { stiffness: 200, damping: 40 });
   const skewX = useTransform(vel, [-2500, 2500], [3, -3]);
 
-  const pinned = !reduce;
+  // HP / reduce motion: daftar vertikal sederhana
+  if (!pinned) {
+    return (
+      <section id="projects" ref={sectionRef} className="relative bg-ink px-5 py-20 md:px-12">
+        <div className="mx-auto max-w-xl md:max-w-3xl">
+          <p className={`mb-4 ${label}`}>{projectsSection.label}</p>
+          <h2 className="display text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{projectsSection.title}</h2>
+          <p className="mt-6 max-w-sm font-display text-[clamp(1rem,1.5vw,1.25rem)] leading-relaxed text-bone/55">{projectsSection.statement}</p>
+          <div className="mt-12 flex flex-col gap-14">
+            {projects.map((p, i) => (
+              <Card key={p.title} project={p} index={i} progress={scrollYProgress} tick={tick} centers={centers} dist={distRef} pinned={false} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" ref={sectionRef}
-      className={`bg-ink ${pinned ? "relative z-10 -mt-[100vh] overflow-clip rounded-t-[2.5rem] shadow-[0_-60px_120px_rgba(0,0,0,0.95)] md:rounded-t-[4rem]" : "relative"}`}
-      style={pinned ? { height } : undefined}>
-      <div className={pinned ? "sticky top-0 flex h-screen flex-col justify-center overflow-hidden" : "relative flex flex-col justify-center overflow-x-auto py-24"}>
+      className="relative z-10 -mt-[100vh] overflow-clip rounded-t-[2.5rem] bg-ink shadow-[0_-60px_120px_rgba(0,0,0,0.95)] md:rounded-t-[4rem]"
+      style={{ height }}>
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         {/* Background kain */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <img src="/bg-projects.jpg" alt="" decoding="async" className="h-full w-full object-cover opacity-[0.38]" />
@@ -82,7 +104,7 @@ export default function Projects() {
           <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-transparent to-transparent" />
         </div>
 
-        <motion.div ref={trackRef} style={pinned ? { x, skewX } : undefined} className="relative flex w-max items-center gap-[6vw] self-start pl-[8vw] pr-[12vw]">
+        <motion.div ref={trackRef} style={{ x, skewX }} className="relative flex w-max items-center gap-[6vw] self-start pl-[8vw] pr-[12vw]">
           <div className="w-[78vw] shrink-0 md:w-[32vw]">
             <p className={`mb-6 ${label}`}>{projectsSection.label}</p>
             <h2 className="display text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{projectsSection.title}</h2>
@@ -90,15 +112,13 @@ export default function Projects() {
           </div>
 
           {projects.map((p, i) => (
-            <Card key={p.title} project={p} index={i} progress={scrollYProgress} tick={tick} centers={centers} dist={distRef} />
+            <Card key={p.title} project={p} index={i} progress={scrollYProgress} tick={tick} centers={centers} dist={distRef} pinned />
           ))}
         </motion.div>
 
-        {pinned && (
-          <div aria-hidden className="relative mt-10 h-px w-[min(60vw,24rem)] self-center bg-white/15 md:mt-14">
-            <motion.div style={{ scaleX: scrollYProgress, originX: 0 }} className="h-full w-full bg-bone" />
-          </div>
-        )}
+        <div aria-hidden className="relative mt-10 h-px w-[min(60vw,24rem)] self-center bg-white/15 md:mt-14">
+          <motion.div style={{ scaleX: scrollYProgress, originX: 0 }} className="h-full w-full bg-bone" />
+        </div>
       </div>
     </section>
   );

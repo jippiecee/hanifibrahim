@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { socials } from "../data/contact";
+import { useMedia } from "../hooks/useMedia";
 
 type Line = { text: string; kind: "in" | "out" | "ok" | "err" };
 const PROMPT = "hanif@portfolio:~$";
@@ -15,7 +16,8 @@ const HEADLINE = "Can't understand?";
 
 export default function Contact() {
   const reduce = useReducedMotion();
-  const pinned = !reduce;
+  const phone = useMedia("(max-width: 767px)");
+  const pinned = !reduce && !phone; // HP: tanpa terminal & tanpa efek pin
   const sectionRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
@@ -24,7 +26,7 @@ export default function Contact() {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
 
   // Satu blok teks naik dari bawah layar (swipe up), dengan sedikit mantul
-  const raw = useTransform(scrollYProgress, [0.13, 0.33], [0, 1], { clamp: true });
+  const raw = useTransform(scrollYProgress, [0.1, 0.45], [0, 1], { clamp: true });
   const p = useSpring(raw, { stiffness: 140, damping: 16, mass: 0.8 });
   const y = useTransform(p, [0, 1], ["70vh", "0vh"]);
 
@@ -53,6 +55,7 @@ export default function Contact() {
     setValue("");
   };
 
+  if (phone) return <section id="contact" ref={sectionRef} aria-hidden className="h-0" />;
   const headline = (
     <h2
       className="text-center font-['Baloo_2',system-ui,sans-serif] text-[clamp(2.6rem,8vw,7.5rem)] font-extrabold leading-[0.95] tracking-tight text-bone [-webkit-text-stroke:0.04em_currentColor] [paint-order:stroke_fill] [stroke-linejoin:round] [text-shadow:0_8px_0_rgba(0,0,0,0.6),0_0_40px_rgba(255,255,255,0.45),0_0_90px_rgba(255,255,255,0.25)]"
@@ -65,23 +68,16 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className={`relative z-10 bg-ink ${pinned ? "h-[400vh]" : "px-4 py-24"}`}
+      className={`relative z-10 ${pinned ? "h-[220vh]" : "px-4 pb-4 pt-28 md:py-24"}`}
     >
-      <div className={pinned ? "sticky top-0 flex h-screen items-center justify-center overflow-hidden px-4" : "relative flex flex-col items-center gap-10"}>
-        {/* Background SAMA dengan Projects supaya tidak ada transisi */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <img src="/bg-projects.jpg" alt="" decoding="async" className="h-full w-full object-cover opacity-[0.38]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-transparent to-transparent" />
-        </div>
-
+      <div className={pinned ? "sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden px-4" : "relative flex flex-col items-center gap-10"}>
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           onClick={() => inputRef.current?.focus({ preventScroll: true })}
-          className="relative w-[min(94vw,84rem)] cursor-text overflow-hidden rounded-xl border border-white/10 bg-[#0b0c0f]/95 shadow-[0_30px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+          className="relative hidden w-[min(94vw,84rem)] cursor-text overflow-hidden rounded-xl border border-white/10 bg-[#0b0c0f]/95 shadow-[0_30px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl md:block"
         >
           {/* Title bar ala Linux (GNOME): kontrol di kanan */}
           <div className="relative flex items-center border-b border-black/60 bg-gradient-to-b from-[#3b3c40] to-[#2d2e32] px-4 py-2.5">
@@ -132,7 +128,7 @@ export default function Contact() {
                   onKeyDown={(e) => { if (e.key === "Enter") run(value); }}
                   aria-label="Terminal command"
                   autoComplete="off" autoCapitalize="none" autoCorrect="off" spellCheck={false}
-                  className="min-w-0 flex-1 bg-transparent text-bone/90 caret-cyan-glow !outline-none"  
+                  className="min-w-0 flex-1 bg-transparent text-bone/90 caret-cyan-glow !outline-none"
                 />
               </label>
             </div>
@@ -150,4 +146,4 @@ export default function Contact() {
       </div>
     </section>
   );
-}   
+}
