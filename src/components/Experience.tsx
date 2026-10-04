@@ -67,7 +67,7 @@ export default function Experience() {
               </div>
 
               {/* INSTAGRAM FRAME */}
-              <div className="mx-auto w-full max-w-[18rem] lg:mt-8 min-[1440px]:absolute min-[1440px]:-top-24 min-[1440px]:left-full min-[1440px]:z-10 min-[1440px]:ml-44 min-[1440px]:mt-0 min-[1440px]:mx-0 min-[1440px]:w-[clamp(12rem,15vw,17rem)] min-[1440px]:max-w-none">
+              <div className="mx-auto w-full max-w-[18rem] lg:absolute lg:-top-24 lg:left-full lg:z-10 lg:ml-44 lg:mt-0 lg:mx-0 lg:w-[clamp(12rem,15vw,17rem)] lg:max-w-none">
                 <InstagramFrame />
               </div>
             </div>

@@ -23,7 +23,7 @@ export default function MoreContact() {
       </motion.h2>
 
       <div className="mx-auto max-w-[88rem] md:mt-32">
-        <div className="grid w-full grid-cols-[minmax(0,1fr)] items-center gap-14 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-12">
+        <div className="grid w-full grid-cols-[minmax(0,1fr)] items-center gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">
           {/* KIRI: foto + teks */}
           <div className="flex min-w-0 flex-col items-center gap-8 md:flex-row md:gap-12">
             <motion.div
@@ -52,8 +52,8 @@ export default function MoreContact() {
             </blockquote>
           </div>
 
-          {/* KANAN: carousel tech stack + bar Instagram (xl:-top-6 = naik/turunin posisinya) */}
-          <div className="relative min-w-0 xl:-top-6">
+          {/* KANAN: carousel tech stack + bar Instagram (lg:-top-6 = naik/turunin posisinya) */}
+          <div className="relative min-w-0 lg:-top-6">
             <TechCarousel />
             {socials.filter((s) => s.cmd === "instagram").map((s) => (
               <div key={s.cmd} className="mt-2 flex justify-center">
