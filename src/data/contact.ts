@@ -1,8 +1,8 @@
 export const socials = [
-  { cmd: "instagram", url: "https://instagram.com/USERNAME_KAMU" },
-  { cmd: "youtube",   url: "https://youtube.com/@USERNAME_KAMU" },
-  { cmd: "linkedin",  url: "https://linkedin.com/in/USERNAME_KAMU" },
-  { cmd: "github",    url: "https://github.com/USERNAME_KAMU" },
+  { cmd: "instagram", url: "https://www.instagram.com/hanifibrrhm_/?next=%2F" },
+  { cmd: "youtube",   url: "https://www.youtube.com/@hanif_Ibrahim" },
+  { cmd: "linkedin",  url: "https://www.linkedin.com/in/hanif-ibrahim-u-000803374/" },
+  { cmd: "github",    url: "https://github.com/jippiecee" },
 ];
 
 export const email: string = "theumbara@Gmail.com";

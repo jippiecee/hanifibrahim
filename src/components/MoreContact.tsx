@@ -47,7 +47,7 @@ export default function MoreContact() {
 
             <blockquote className="text-center md:text-left">
               <p className="whitespace-nowrap font-display text-[clamp(1.9rem,3.4vw,3.75rem)] font-semibold leading-[1.08] tracking-tight">
-                Let's create,<br />innovate,<br />and inspire.
+                Let's<br />create,<br />innovate,<br />and<br />inspire.
               </p>
             </blockquote>
           </div>

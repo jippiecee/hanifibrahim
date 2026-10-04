@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 // ====== GANTI ANGKA DI SINI ======
 // value = angka tujuan, suffix = tulisan setelah angka (K, M, +), decimals = jumlah angka di belakang koma
 const STATS = [
-  { label: "Subscribers", value: 100, suffix: "K+", decimals: 0 },
-  { label: "Videos", value: 200, suffix: "+", decimals: 0 },
-  { label: "Total Views", value: 10, suffix: "M+", decimals: 0 },
+  { label: "Subscribers", value: 38, suffix: "K+", decimals: 0 },
+  { label: "Videos", value: 102, suffix: "+", decimals: 0 },
+  { label: "Total Views", value: 3, suffix: "M+", decimals: 0 },
 ];
 // =================================
 
