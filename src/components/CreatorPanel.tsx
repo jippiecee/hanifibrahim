@@ -25,7 +25,7 @@ function Img({ src, alt, pos = "center" }: { src: string; alt: string; pos?: str
 export default function CreatorPanel() {
   const { channel, images } = creator;
   return (
-    <div className="mx-auto min-h-screen max-w-6xl px-5 py-24 md:px-12 md:py-40">
+    <div className="mx-auto min-h-screen max-w-6xl px-5 pb-0 pt-24 md:px-12 md:pb-0 md:pt-40">
       <motion.p {...reveal()} className={`mb-6 text-center ${label}`}>{creator.label}</motion.p>
       <motion.h2 {...reveal(0.1)} className="display mx-auto text-center text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{creator.title}</motion.h2>
       <motion.p {...reveal(0.2)} className="mx-auto mt-8 max-w-2xl text-center font-display text-[clamp(1rem,1.5vw,1.25rem)] leading-relaxed text-bone/55">{creator.statement}</motion.p>
@@ -65,7 +65,7 @@ export default function CreatorPanel() {
       </div>
 
       {/* Banner channel */}
-       <Tile delay={0.1} className="mt-3 aspect-[3/1] md:mt-4 md:aspect-[4/1]">
+      <Tile delay={0.1} className="mt-3 aspect-[3/1] md:mt-4 md:aspect-[4/1]">
         <a href={channel.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${channel.handle} on YouTube`} className="block h-full w-full">
           <Img src={images.banner} alt="Hanifibrrhm_ channel banner" pos="center 52%" />
         </a>

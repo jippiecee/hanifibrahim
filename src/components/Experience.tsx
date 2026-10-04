@@ -4,7 +4,6 @@ import { experience } from "../data/experience";
 import { photos } from "../data/photos";
 import PhotoSlider from "./PhotoSlider";
 import MentorBubbles from "./MentorBubbles";
-import Quote from "./Quote";
 import TerminalCard from "./TerminalCard";
 import CreatorPanel from "./CreatorPanel";
 import InstagramFrame from "./InstagramFrame";
@@ -38,7 +37,8 @@ export default function Experience() {
     <section id="experience" className="relative bg-black">
       {/* Bagian 1: Mentor */}
       <div ref={stageRef} className="sticky" style={{ top }}>
-        <motion.div style={{ scale, opacity: dim, transformOrigin: "50% 100%" }} className="px-5 py-28 md:px-12 md:py-44">
+       {/* pb = hitam di bawah konten. Makin kecil, konten makin turun ke tengah. Makin besar, makin naik. */}
+       <motion.div style={{ scale, opacity: dim, transformOrigin: "50% 100%" }} className="px-5 pb-24 pt-28 md:px-12 md:pb-40 md:pt-44">
           <div className="mx-auto max-w-6xl">
             <motion.p {...reveal()} className="mb-6 pl-[0.4em] text-center font-editorial text-[14px] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[18px] md:tracking-[0.55em]">{experience.label}</motion.p>
             <motion.h2 {...reveal(0.1)} className="display mx-auto max-w-4xl text-center text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{experience.title}</motion.h2>
@@ -69,10 +69,12 @@ export default function Experience() {
 </div>
 
 </div>
-            <div className="mt-10 md:mt-14"><Quote text={experience.quote} /></div>
           </div>
         </motion.div>
       </div>
+
+      {/* Jeda: mentor tetap terlihat selama jarak scroll ini sebelum ditutup. Makin besar angkanya, makin lama. */}
+      <div aria-hidden className="h-[70vh] md:h-[90vh]" />
 
       {/* Bagian 2: Content Creator, menutupi bagian mentor saat di-scroll */}
       <div ref={coverRef} className="relative z-10 rounded-t-[2.5rem] border-t border-white/10 bg-[#050506] shadow-[0_-60px_120px_rgba(0,0,0,0.95)] md:rounded-t-[4rem]">

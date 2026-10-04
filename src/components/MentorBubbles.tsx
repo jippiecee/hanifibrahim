@@ -15,9 +15,12 @@ export default function MentorBubbles({ schools }: { schools: string[] }) {
   return (
     <ul ref={ref} className="flex flex-col items-start gap-2.5">
       <AnimatePresence mode="popLayout">
-        {open ? [
-          ...schools.map((s, k) => <motion.li key={s} {...motionProps(0.3 + k * 0.45, k)} className={`${pill} bg-volt text-white`}>{s}</motion.li>),
-          <motion.li key="close" {...motionProps(0.5 + schools.length * 0.45, schools.length)} className="pt-1">
+          {open ? [
+  <motion.li key="title" {...motionProps(0.3, 0)} className={`${pill} bg-[#0b55bd] text-white`}>
+    Mentor at
+  </motion.li>,
+  ...schools.map((s, k) => <motion.li key={s} {...motionProps(0.3 + (k + 1) * 0.45, k + 1)} className={`${pill} bg-volt text-white`}>{s}</motion.li>),
+  <motion.li key="close" {...motionProps(0.5 + (schools.length + 1) * 0.45, schools.length + 1)} className="pt-1">
             <button onClick={() => setOpen(false)} aria-label="Close messages"
               className="grid h-11 w-11 place-items-center rounded-full bg-volt text-white transition-transform duration-500 ease-cine hover:rotate-90">
               <svg aria-hidden width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>

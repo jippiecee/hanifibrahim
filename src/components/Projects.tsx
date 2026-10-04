@@ -1,19 +1,48 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity, type MotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { projects, projectsSection } from "../data/projects";
+import MacFrame from "./MacFrame";
 
 const label = "font-editorial text-[12px] font-normal uppercase tracking-[0.3em] text-bone/60 md:text-[13px]";
 
-/**
- * Scroll ke bawah -> project bergeser ke samping.
- * Section dibuat tinggi (tinggi layar + jarak geser), panel di dalamnya "menempel" (sticky),
- * lalu progress scroll vertikal diubah jadi pergeseran horizontal.
- */
+type Project = (typeof projects)[number];
+
+function Card({ project, index, progress, tick, centers, dist }: {
+  project: Project; index: number; progress: MotionValue<number>; tick: MotionValue<number>;
+  centers: React.MutableRefObject<number[]>; dist: React.MutableRefObject<number>;
+}) {
+  const focus = useTransform([progress, tick], (latest: number[]) => {
+    const vw = window.innerWidth;
+    const c = (centers.current[index] ?? vw / 2) - latest[0] * dist.current;
+    return Math.min(1, Math.abs(c - vw / 2) / (vw * 0.6));
+  });
+  const scale = useTransform(focus, [0, 1], [1.03, 0.92]);
+  const opacity = useTransform(focus, [0, 1], [1, 0.4]);
+
+  return (
+    <motion.a data-card href={project.url || undefined} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title}`}
+      style={{ scale, opacity }} className="group block w-[82vw] shrink-0 md:w-[min(42vw,calc((100vh-20rem)*1.65))]">
+      <MacFrame src={project.image} alt={`${project.title} website preview`} />
+      <div className="mt-7 flex items-start justify-between gap-6">
+        <div>
+          <p className={label}>{String(index + 1).padStart(2, "0")} — {project.tag}</p>
+          <h3 className="mt-2 font-display text-[clamp(1.4rem,2.4vw,2.2rem)] font-semibold leading-none tracking-tight">{project.title}</h3>
+        </div>
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/15 text-bone/70 transition-colors duration-300 group-hover:border-neutral-500 group-hover:text-bone">
+          <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>
+        </span>
+      </div>
+    </motion.a>
+  );
+}
+
 export default function Projects() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const distRef = useRef(0);
+  const centers = useRef<number[]>([]);
+  const tick = useMotionValue(0);
   const [height, setHeight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -21,55 +50,52 @@ export default function Projects() {
     if (!el) return;
     const calc = () => {
       distRef.current = Math.max(0, el.scrollWidth - window.innerWidth);
+      centers.current = Array.from(el.querySelectorAll<HTMLElement>("[data-card]")).map((c) => c.offsetLeft + c.offsetWidth / 2);
       setHeight(distRef.current + window.innerHeight);
+      tick.set(tick.get() + 1);
     };
     calc();
     const ro = new ResizeObserver(calc);
     ro.observe(el);
     window.addEventListener("resize", calc);
     return () => { ro.disconnect(); window.removeEventListener("resize", calc); };
-  }, []);
+  }, [tick]);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, (p) => -p * distRef.current);
 
+  const { scrollY } = useScroll();
+  const vel = useSpring(useVelocity(scrollY), { stiffness: 200, damping: 40 });
+  const skewX = useTransform(vel, [-2500, 2500], [3, -3]);
+
   const pinned = !reduce;
 
   return (
-    <section id="projects" ref={sectionRef} className="relative bg-ink" style={pinned ? { height } : undefined}>
-      <div className={pinned ? "sticky top-0 flex h-screen items-center overflow-hidden" : "flex items-center overflow-x-auto py-24"}>
-        <motion.div ref={trackRef} style={pinned ? { x } : undefined} className="flex w-max items-center gap-[6vw] pl-[8vw] pr-[12vw]">
-          {/* Intro */}
+    <section id="projects" ref={sectionRef}
+      className={`bg-ink ${pinned ? "relative z-10 -mt-[100vh] overflow-clip rounded-t-[2.5rem] shadow-[0_-60px_120px_rgba(0,0,0,0.95)] md:rounded-t-[4rem]" : "relative"}`}
+      style={pinned ? { height } : undefined}>
+      <div className={pinned ? "sticky top-0 flex h-screen flex-col justify-center overflow-hidden" : "relative flex flex-col justify-center overflow-x-auto py-24"}>
+        {/* Background kain */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <img src="/bg-projects.jpg" alt="" decoding="async" className="h-full w-full object-cover opacity-[0.38]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-transparent to-transparent" />
+        </div>
+
+        <motion.div ref={trackRef} style={pinned ? { x, skewX } : undefined} className="relative flex w-max items-center gap-[6vw] self-start pl-[8vw] pr-[12vw]">
           <div className="w-[78vw] shrink-0 md:w-[32vw]">
             <p className={`mb-6 ${label}`}>{projectsSection.label}</p>
             <h2 className="display text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{projectsSection.title}</h2>
             <p className="mt-8 max-w-sm font-display text-[clamp(1rem,1.5vw,1.25rem)] leading-relaxed text-bone/55">{projectsSection.statement}</p>
           </div>
 
-          {/* Cards */}
           {projects.map((p, i) => (
-            <a key={p.title} href={p.url || undefined} target="_blank" rel="noopener noreferrer" aria-label={`Open ${p.title}`}
-              className="group block w-[72vw] shrink-0 md:w-[min(46vw,calc((100vh-22rem)*1.77))]">
-              <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0d0e10] transition-colors duration-300 group-hover:border-neutral-500">
-                <img src={p.image} alt={`${p.title} website preview`} loading="lazy" decoding="async" draggable={false}
-                  className="aspect-video w-full object-cover object-top" />
-              </div>
-              <div className="mt-5 flex items-start justify-between gap-6">
-                <div>
-                  <p className={label}>{String(i + 1).padStart(2, "0")} — {p.tag}</p>
-                  <h3 className="mt-2 font-display text-[clamp(1.4rem,2.4vw,2.2rem)] font-semibold leading-none tracking-tight">{p.title}</h3>
-                </div>
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/15 text-bone/70 transition-colors duration-300 group-hover:border-neutral-500 group-hover:text-bone">
-                  <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>
-                </span>
-              </div>
-            </a>
+            <Card key={p.title} project={p} index={i} progress={scrollYProgress} tick={tick} centers={centers} dist={distRef} />
           ))}
         </motion.div>
 
-        {/* Progress bar */}
         {pinned && (
-          <div aria-hidden className="absolute bottom-8 left-1/2 h-px w-[min(60vw,24rem)] -translate-x-1/2 bg-white/15">
+          <div aria-hidden className="relative mt-10 h-px w-[min(60vw,24rem)] self-center bg-white/15 md:mt-14">
             <motion.div style={{ scaleX: scrollYProgress, originX: 0 }} className="h-full w-full bg-bone" />
           </div>
         )}
