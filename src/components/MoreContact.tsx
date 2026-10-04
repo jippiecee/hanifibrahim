@@ -32,7 +32,7 @@ export default function MoreContact() {
               className="relative shrink-0"
             >
               <div className="relative aspect-[4/5] w-[min(78vw,17rem)] overflow-hidden rounded-3xl border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.6)] md:h-[clamp(20rem,52svh,32rem)] md:w-auto">
-                <img src="/me.jpg" alt="Hanif Ibrahim" decoding="async" loading="lazy" className="h-full w-full origin-[25%_60%] scale-[1.7] object-cover object-[50%_62%]" />
+                <img src="/me.jpg" alt="Hanif Ibrahim" decoding="async" loading="lazy" className="h-full w-full origin-[0%_38%] scale-[2.1] object-cover object-[50%_62%]" />
                 <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
               </div>
               <nav aria-label="Social media" className="absolute inset-x-0 bottom-4 flex justify-center gap-2.5">
