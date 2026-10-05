@@ -1,5 +1,3 @@
-<div align="center
-
 License and usage
 
 Copyright © 2026 Hanif Ibrahim Umbara. All rights reserved.
@@ -11,4 +9,3 @@ If you like the work and want to use a specific idea or technique, ask first. A 
 
 <div align="center">
 Designed and built by <b>Hanif Ibrahim Umbara</b>
-</div>
