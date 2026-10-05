@@ -1,7 +1,6 @@
-<div align="center">
-[**Live site →**](https://hanifibrrhmm.netlify.app)
+<div align="center
 
-## License and usage
+License and usage
 
 Copyright © 2026 Hanif Ibrahim Umbara. All rights reserved.
 
