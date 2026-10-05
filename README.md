@@ -1,13 +1,7 @@
 <div align="center">
-
-# Hanif Ibrahim Umbara
-
-**Software Developer · Portfolio**
 [**Live site →**](https://hanifibrrhmm.netlify.app)
 
 ## License and usage
-
-**This is a personal portfolio, not a template.**
 
 Copyright © 2026 Hanif Ibrahim Umbara. All rights reserved.
 
