@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Photo } from "../data/photos";
 
-const INTERVAL = 3500; // ganti foto tiap 2 detik (dalam ms)
+const FIRST_DURATION = 4500; // photo-1 tampil paling lama (ms)
+const OTHER_DURATION = 2500; // foto lainnya (ms)
 
 /** Foto ganti otomatis dengan efek "kedip" cepat, tanpa geser. */
 export default function PhotoSlider({ photos }: { photos: Photo[] }) {
@@ -9,9 +10,10 @@ export default function PhotoSlider({ photos }: { photos: Photo[] }) {
 
   useEffect(() => {
     if (photos.length < 2) return;
-    const id = setInterval(() => setI((v) => (v + 1) % photos.length), INTERVAL);
-    return () => clearInterval(id);
-  }, [photos.length]);
+    const delay = i === 0 ? FIRST_DURATION : OTHER_DURATION;
+    const id = setTimeout(() => setI((v) => (v + 1) % photos.length), delay);
+    return () => clearTimeout(id);
+  }, [i, photos.length]);
 
   return (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] bg-ink sm:aspect-[16/10]">

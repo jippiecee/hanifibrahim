@@ -8,8 +8,8 @@ export const projectsSection = {
 
 export const projects: Project[] = [
   // TODO: isi `url` dengan link website masing-masing project
+  { title: "HiuBlog", tag: "Personal Blog", image: "/projects/hiublog.jpg", url: "" },
   { title: "Destentations", tag: "Company Website", image: "/projects/destentations.jpg", url: "" },
   { title: "D-Event", tag: "Event Management Platform", image: "/projects/d-event.jpg", url: "" },
   { title: "Cretects", tag: "Thrift Shop Marketplace", image: "/projects/cretects.jpg", url: "" },
-  { title: "HiuBlog", tag: "Personal Blog", image: "/projects/hiublog.jpg", url: "" },
 ];
