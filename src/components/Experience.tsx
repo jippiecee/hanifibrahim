@@ -46,7 +46,7 @@ export default function Experience() {
             <motion.p {...reveal()} className="mb-6 pl-[0.4em] text-center font-editorial text-[0.875rem] font-light uppercase tracking-[0.4em] text-bone/80 md:pl-[0.55em] md:text-[1.125rem] md:tracking-[0.55em]">{experience.label}</motion.p>
             <motion.h2 {...reveal(0.1)} className="display mx-auto max-w-4xl text-center text-[clamp(2.8rem,8vw,7rem)] !leading-[0.9]">{experience.title}</motion.h2>
 
-            <div className="relative mx-auto mt-14 flex w-full flex-col items-center gap-6 md:mt-24 lg:block lg:w-[min(44vw,52rem)]">
+            <div className="relative mx-auto mt-10 flex w-full flex-col items-center gap-6 md:mt-8 lg:mt-3 lg:block lg:w-[min(44vw,52rem)]">
               {/* TERMINAL: disembunyikan di HP, melayang di kiri atas foto di desktop */}
               <motion.div
                 {...reveal(0.05)}
